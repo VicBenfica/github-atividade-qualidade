@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Baixar codigo
-        uses: action/checkout@v4
+        uses: actions/checkout@v4
 
       - name: Configurar Java 
         uses: actions/setup-java@v4
