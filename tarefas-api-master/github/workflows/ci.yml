@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  qualidade: 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar codigo
+        uses: action/checkout@v4
+
+      - name: Configurar Java 
+        uses: actions/setup-java@v4
+          with:
+            java-version: '17'
+            distribution: "temurin"
+
+      - name: Executar testes
+        run: mvn teste
