@@ -1,20 +1,41 @@
-name: CI
+name: CI & SonarQube Cloud Analysis
+
 on:
   push:
+    branches: [ "master", "develop" ]
   pull_request:
+    branches: [ "master2" ]
 
 jobs:
-  qualidade: 
+  qualidade:
+    name: Build e Análise de Qualidade
     runs-on: ubuntu-latest
-    steps:
-      - name: Baixar arquivos
-        uses: actions/checkout@v4
 
-      - name: Configurar Java 
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 
+
+      - name: Configurar Java
         uses: actions/setup-java@v4
         with:
           java-version: '17'
-          distribution: "temurin"
+          distribution: 'temurin'
+          cache: maven 
 
-      - name: Executar testes
-        run: mvn test
+      - name: Cache de Pacotes do SonarQube
+        uses: actions/cache@v4
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      - name: Executar Testes e Análise do SonarQube Cloud
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        run: |
+          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+            -Dsonar.projectKey=github-atividade-qualidade \
+            -Dsonar.organization=vicbenfica
