@@ -2,9 +2,9 @@ name: CI & SonarQube Cloud Analysis
 
 on:
   push:
-    branches: [ "master", "develop" ]
+    branches: [ "main", "develop" ]
   pull_request:
-    branches: [ "master2" ]
+    branches: [ "main" ]
 
 jobs:
   qualidade:
