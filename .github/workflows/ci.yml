@@ -37,5 +37,5 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         run: |
           mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-            -Dsonar.projectKey=github-atividade-qualidade \
+            -Dsonar.projectKey=VicBenfica_github-atividade-qualidade \
             -Dsonar.organization=vicbenfica
